@@ -15,7 +15,9 @@ import {
     DialogTitle,
     DialogContent,
     DialogContentText,
-    DialogActions
+    DialogActions,
+    RadioGroup,
+    Radio
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -34,16 +36,30 @@ const useStyles = makeStyles({
 
 const data2 = [
     {
+        fullName: "John Doe",
         email: "Us@gmail.com",
-        country: "pakistan",
-        payment: "paypal",
-        training: "yes"
+        dateRegistered: "2023.02.05",
+        lastLogin: "2023.02.05 11:43:32",
+        accountStatus: "Active",
+        walletBalance: 100,
+        usedStorage: "500MB/2GB",
+        modelsTrained: 5,
+        openedRealAccount: "false",
+        accountType: "Free",
+        affiliateStatus: "No",
     },
     {
-        email: "Ty@gmail.com",
-        country: "India",
-        payment: "Payoneer",
-        training: "yes"
+        fullName: "Alex Ding",
+        email: "Us@gmail.com",
+        dateRegistered: "2023.02.05",
+        lastLogin: "2023.02.05 11:43:32",
+        accountStatus: "Suspended",
+        walletBalance: 200,
+        usedStorage: "700MB/2GB",
+        modelsTrained: 15,
+        openedRealAccount: "true",
+        accountType: "Premium",
+        affiliateStatus: "Yes",
     }
 ];
 
@@ -55,10 +71,12 @@ const TableData = () => {
     const [data, setData] = useState([]);
 
     const [editData, setEditData] = useState({
+        fullName: "",
         email: "",
-        country: "",
-        payment: "",
-        training: ""
+        accountStatus: "",
+        openedRealAccount: "",
+        accountType: "",
+        affiliateStatus: ""
     });
 
     // ...
@@ -113,16 +131,24 @@ const TableData = () => {
             <Table className={classes.table}>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Email</TableCell>
-                        <TableCell align="right">Country</TableCell>
-                        <TableCell align="right">Payment Method</TableCell>
-                        <TableCell align="right">Training</TableCell>
+                        <TableCell>Full Name</TableCell>
+                        <TableCell align="center">Email</TableCell>
+                        <TableCell align="right">Date Registered:</TableCell>
+                        <TableCell align="right">Last Login</TableCell>
+                        <TableCell align="right">Account Status</TableCell>
+                        <TableCell align="right">Wallet Balance</TableCell>
+                        <TableCell align="right">Used Storage</TableCell>
+                        <TableCell align="right">Models Trained</TableCell>
+                        <TableCell align="right">Opened Real Account</TableCell>
+                        <TableCell align="right">Account Type</TableCell>
+                        <TableCell align="right">Affiliate Status</TableCell>
                         <TableCell align="right">Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {data2.map((row) => (
                         <TableRow key={row.email}>
+                            <TableCell align="right">{row.fullName}</TableCell>
                             <TableCell>
                                 <Box display="flex" alignItems="center">
                                     <Box
@@ -142,9 +168,24 @@ const TableData = () => {
                                     <Typography>{row.email}</Typography>
                                 </Box>
                             </TableCell>
-                            <TableCell align="right">{row.country}</TableCell>
-                            <TableCell align="right">{row.payment}</TableCell>
-                            <TableCell align="right">{row.training}</TableCell>
+                            <TableCell align="right">{row.dateRegistered}</TableCell>
+                            <TableCell align="right">{row.lastLogin}</TableCell>
+                            <TableCell align="right">{row.accountStatus}</TableCell>
+                            <TableCell align="right">{row.walletBalance}</TableCell>
+                            <TableCell align="right">{row.usedStorage}</TableCell>
+                            <TableCell align="right">{row.modelsTrained}</TableCell>
+                            <TableCell align="right">
+                                <RadioGroup
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    defaultValue={row.openedRealAccount}
+                                    name="radio-buttons-group"
+                                >
+                                    <FormControlLabel className="justify-end" value="false" control={<Radio color="default" />} label="Yes" />
+                                    <FormControlLabel className="justify-end" value="true" control={<Radio color="default" />} label="No" />
+                                </RadioGroup>
+                            </TableCell>
+                            <TableCell align="right">{row.accountType}</TableCell>
+                            <TableCell align="right">{row.affiliateStatus}</TableCell>
                             <TableCell align="right">
                                 <IconButton onClick={() => handleEditOpen(row)}>
                                     <FaEdit />
@@ -178,7 +219,7 @@ const TableData = () => {
                             setEditData({ ...editData, email: e.target.value })
                         }
                     />
-                    <TextField
+                    {/* <TextField
                         margin="dense"
                         label="Country"
                         type="text"
@@ -187,8 +228,8 @@ const TableData = () => {
                         onChange={(e) =>
                             setEditData({ ...editData, country: e.target.value })
                         }
-                    />
-
+                    /> */}
+{/* 
                     <TextField
                         margin="dense"
                         label="Payment Method"
@@ -198,7 +239,7 @@ const TableData = () => {
                         onChange={(e) =>
                             setEditData({ ...editData, payment: e.target.value })
                         }
-                    />
+                    /> */}
                     <FormControlLabel
                         control={
                             <Switch

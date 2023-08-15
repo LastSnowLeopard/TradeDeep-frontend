@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 
-import fuse from "@assets/images/logos/fuse.svg";
+import fuse from "@assets/images/logos/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,10 +30,7 @@ function Logo() {
 
   return (
     <div className={clsx(classes.root, 'flex items-center')}>
-      <img className="logo-icon w-24 h-24" src={fuse} alt="logo" />
-      <Typography className="text-16 leading-none mx-12 font-medium logo-text" color="inherit">
-        DEEPTRADE
-      </Typography>
+      <img className="logo-icon" src={fuse} alt="logo" />
     </div>
   );
 }

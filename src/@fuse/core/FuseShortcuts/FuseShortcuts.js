@@ -121,7 +121,7 @@ function FuseShortcuts(props) {
       className={clsx(
         classes.root,
         props.variant,
-        'flex flex-1',
+        'flex flex-1 self-center',
         props.variant === 'vertical' && 'flex-grow-0 flex-shrink',
         props.className
       )}

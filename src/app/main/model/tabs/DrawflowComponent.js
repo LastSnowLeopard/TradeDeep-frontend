@@ -126,7 +126,7 @@ const DrawflowWrapper = () => {
       case 'environment':
       var environment = `
         <div>
-          <div class="title-box"><i class="fa-solid fa-seedling"></i> Env(APPL)<i class="fa fa-cog"></i></div>
+          <div class="title-box"><i class="fa-solid fa-seedling"></i> Env(SelectAsset)<i class="fa fa-cog"></i></div>
           <div class="box">
             <select>
               <option value="crypto">Crypto</option>
@@ -526,7 +526,7 @@ const DrawflowWrapper = () => {
         <Box className="wrapper">
           <Box className="col" id='left_sidebar'>
             <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="environment">
-              <i className="fa-solid fa-seedling"></i><span> Env(APPL)</span>
+              <i className="fa-solid fa-seedling"></i><span> Env(SelectAsset)</span>
             </Box>
             <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="agents">
               <i className="fa fa-building"></i><span> Agents</span>
