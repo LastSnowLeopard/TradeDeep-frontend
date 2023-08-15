@@ -145,7 +145,7 @@ function Accounts(props) {
       {listData.map((item) => (
         <Box boxShadow={1} p={2} bgcolor="background.paper">
           <Grid item xs={12} md={12} lg={12} display="flex" alignItems="center">
-            <Box display="flex" display="flex" alignItems="center" justifyContent="space-between">
+            <Box display="flex" alignItems="center" justifyContent="space-between">
               <Box mr={2}>
                 <img src="https://www.cnet.com/a/img/resize/e797cd7dd3d705435319ad5bfb405c0c60eae5ad/hub/2022/04/05/653e0d19-f298-49f3-9bb0-41ad1464e1cd/gettyimages-1199472028.jpg?auto=webp&fit=crop&height=675&width=1200" alt={item.name} width={80} />
               </Box>

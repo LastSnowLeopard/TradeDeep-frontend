@@ -88,7 +88,7 @@ function DashboardApp(props) {
           className="w-160 mr-12"
           // onClick={(ev) => dispatch(openNewModelDialog())}
           component={Link}
-          to="/model"
+          to="/buildmodel"
         >
           +Create Model
         </Button>

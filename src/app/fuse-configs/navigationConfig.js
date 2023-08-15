@@ -29,7 +29,7 @@ const navigationConfig = [
         translate: 'Model',
         type: 'item',
         icon: 'view_in_ar',
-        url: '/model',
+        url: '/buildmodel',
       },
       // {
       //   id: 'datastore-component',
@@ -60,7 +60,7 @@ const navigationConfig = [
         title: 'API Keys',
         translate: 'API Keys',
         type: 'item',
-        icon: 'vpn_key',
+        icon: 'key',
         url: '/apikeys',
       },
       {
@@ -120,13 +120,21 @@ const navigationConfig = [
         url: '/whatnew',
       },
       {
-        id: 'help-component',
-        title: 'Help',
-        translate: 'Help',
+        id: 'features-component',
+        title: "Features",
+        translate: "Features",
         type: 'item',
-        icon: 'help',
-        url: '/help',
+        icon: 'class',
+        url: '/features',
       },
+      // {
+      //   id: 'help-component',
+      //   title: 'Help',
+      //   translate: 'Help',
+      //   type: 'item',
+      //   icon: 'help',
+      //   url: '/help',
+      // },
    
     ],
 

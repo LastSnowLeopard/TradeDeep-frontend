@@ -8,7 +8,7 @@ const ModelConfig = {
   },
   routes: [
     {
-      path: '/model',
+      path: '/buildmodel',
       component: lazy(() => import('./Model')),
     },
   ],

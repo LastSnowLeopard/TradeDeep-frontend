@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { selectToolbarTheme } from 'app/store/fuse/settingsSlice';
 import AdjustFontSize from '../../shared-components/AdjustFontSize';
 import FullScreenToggle from '../../shared-components/FullScreenToggle';
+import collapsedLogo from "@assets/images/logos/logo-collapsed.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -45,11 +46,19 @@ function ToolbarLayout1(props) {
                   )}
 
                   {config.navbar.style === 'style-1' && !navbar.open && (
-                    <NavbarToggleButton className="w-40 h-40 p-0 mx-0" />
+                    <>
+                      <div className={clsx(classes.root, 'flex items-center')}>
+                        <img className="logo-icon" width={60} src={collapsedLogo} alt="logo" />
+                      </div>
+                      <NavbarToggleButton className="w-40 h-40 p-0 mx-0 self-center" />
+                    </>
                   )}
                 </Hidden>
 
                 <Hidden lgUp>
+                  <div className={clsx(classes.root, 'flex items-center')}>
+                    <img className="logo-icon" width={40} src={collapsedLogo} alt="logo" />
+                  </div>
                   <NavbarToggleButton className="w-40 h-40 p-0 mx-0 sm:mx-8" />
                 </Hidden>
               </>
