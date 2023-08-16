@@ -7,6 +7,7 @@ import { navbarCloseMobile } from 'app/store/fuse/navbarSlice';
 import NavbarStyle1Content from './NavbarStyle1Content';
 
 const navbarWidth = 280;
+const collapseWidth = 70;
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -14,22 +15,28 @@ const useStyles = makeStyles((theme) => ({
     width: navbarWidth,
     maxWidth: navbarWidth,
     '&.closed': {
-      transition: theme.transitions.create('margin', {
+      transition: theme.transitions.create(['width', 'minWidth', 'maxWidth'], {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.leavingScreen,
       }),
-      '&.left': {
-        marginLeft: -navbarWidth,
+      minWidth: collapseWidth,
+      width: collapseWidth,
+      maxWidth: collapseWidth,
+      // '&.left': {
+        //   marginLeft: -navbarWidth,
+      // },
+      // '&.right': {
+        //   marginRight: -navbarWidth,
+        // },
       },
-      '&.right': {
-        marginRight: -navbarWidth,
-      },
-    },
-    '&.opened': {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
+      '&.opened': {
+        transition: theme.transitions.create(['width', 'minWidth', 'maxWidth'], {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        minWidth: navbarWidth,
+        width: navbarWidth,
+        maxWidth: navbarWidth,
     },
   },
   navbarPaper: {

@@ -2,11 +2,13 @@ import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Logo from 'app/fuse-layouts/shared-components/Logo';
+import MiniLogo from 'app/fuse-layouts/shared-components/MiniLogo';
 import NavbarToggleButton from 'app/fuse-layouts/shared-components/NavbarToggleButton';
 import Navigation from 'app/fuse-layouts/shared-components/Navigation';
 import UserNavbarHeader from 'app/fuse-layouts/shared-components/UserNavbarHeader';
 import clsx from 'clsx';
 import { memo } from 'react';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +42,8 @@ function NavbarStyle1Content(props) {
   const classes = useStyles();
   const theme = useTheme();
 
+  const { open } = useSelector(({ fuse }) => fuse.navbar);
+
   return (
     <div
       className={clsx(
@@ -51,13 +55,13 @@ function NavbarStyle1Content(props) {
       <AppBar
         color="primary"
         position="static"
-        className="flex flex-row items-center flex-shrink h-48 md:h-64 min-h-48 md:min-h-64 px-12 shadow-0"
+        className="flex flex-row items-center flex-shrink h-64 md:h-64 min-h-48 md:min-h-64 px-12 shadow-0"
       >
         <div className="flex flex-1 mx-4">
           <Logo />
         </div>
 
-        <NavbarToggleButton className="w-40 h-40 p-0" />
+        {open ? <NavbarToggleButton className="w-40 h-40 p-0" /> : <MiniLogo />}
       </AppBar>
 
       <FuseScrollbars

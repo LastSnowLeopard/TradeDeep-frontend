@@ -7,8 +7,9 @@ import { alpha } from '@material-ui/core/styles/colorManipulator';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FuseNavBadge from '../../FuseNavBadge';
+import { Tooltip } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   item: (props) => ({
@@ -50,40 +51,70 @@ const useStyles = makeStyles((theme) => ({
 function FuseNavVerticalItem(props) {
   const dispatch = useDispatch();
   const { item, nestedLevel, onItemClick } = props;
+  const { open } = useSelector(({ fuse }) => fuse.navbar);
   const classes = useStyles({
     itemPadding: nestedLevel > 0 ? 28 + nestedLevel * 16 : 12,
   });
 
   return useMemo(
     () => (
-      <ListItem
-        button
-        component={NavLinkAdapter}
-        to={item.url}
-        activeClassName="active"
-        className={clsx(classes.item, 'fuse-list-item')}
-        onClick={() => onItemClick && onItemClick(item)}
-        exact={item.exact}
-      >
-        {item.icon && (
-          <Icon
-            className={clsx('fuse-list-item-icon text-20 flex-shrink-0', item.iconClass)}
-            color="action"
-          >
-            {item.icon}
-          </Icon>
-        )}
+      <>
+        {
+          open ?
+            <ListItem
+              button
+              component={NavLinkAdapter}
+              to={item.url}
+              activeClassName="active"
+              className={clsx(classes.item, 'fuse-list-item')}
+              onClick={() => onItemClick && onItemClick(item)}
+              exact={item.exact}
+            >
+              {item.icon && (
+                <Icon
+                  className={clsx('fuse-list-item-icon text-20 flex-shrink-0', item.iconClass)}
+                  color="action"
+                >
+                  {item.icon}
+                </Icon>
+              )}
 
-        <ListItemText
-          className="fuse-list-item-text"
-          primary={item.title}
-          classes={{ primary: 'text-13 font-medium fuse-list-item-text-primary' }}
-        />
+              {open && (
+                <ListItemText
+                  className="fuse-list-item-text"
+                  primary={item.title}
+                  classes={{ primary: 'text-13 font-medium fuse-list-item-text-primary' }}
+                />
+              )}
 
-        {item.badge && <FuseNavBadge badge={item.badge} />}
-      </ListItem>
+              {item.badge && <FuseNavBadge badge={item.badge} />}
+            </ListItem> :
+            <Tooltip title={item.title} placement='right'>
+              <ListItem
+                button
+                component={NavLinkAdapter}
+                to={item.url}
+                activeClassName="active"
+                className={clsx(classes.item, 'fuse-list-item')}
+                onClick={() => onItemClick && onItemClick(item)}
+                exact={item.exact}
+              >
+                {item.icon && (
+                  <Icon
+                    className={clsx('fuse-list-item-icon text-20 flex-shrink-0', item.iconClass)}
+                    color="action"
+                  >
+                    {item.icon}
+                  </Icon>
+                )}
+
+                {item.badge && <FuseNavBadge badge={item.badge} />}
+              </ListItem>
+            </Tooltip>
+        }
+      </>
     ),
-    [classes.item, item, onItemClick]
+    [classes.item, item, onItemClick, open]
   );
 }
 

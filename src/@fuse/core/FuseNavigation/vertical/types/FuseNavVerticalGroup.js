@@ -5,7 +5,7 @@ import { alpha } from '@material-ui/core/styles/colorManipulator';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import FuseNavItem from '../../FuseNavItem';
 
@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 function FuseNavVerticalGroup(props) {
   const dispatch = useDispatch();
+
+  const { open } = useSelector(({ fuse }) => fuse.navbar)
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
@@ -48,7 +50,7 @@ function FuseNavVerticalGroup(props) {
           to={item.url}
           role="button"
         >
-          <span className="fuse-list-subheader-text uppercase text-12">{item.title}</span>
+          {open && <span className="fuse-list-subheader-text uppercase text-12">{item.title}</span>}
         </ListSubheader>
 
         {item.children && (
@@ -66,7 +68,7 @@ function FuseNavVerticalGroup(props) {
         )}
       </>
     ),
-    [classes.item, item, nestedLevel, onItemClick]
+    [classes.item, item, nestedLevel, onItemClick, open]
   );
 }
 
