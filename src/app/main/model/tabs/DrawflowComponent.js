@@ -3,6 +3,7 @@ import { Box, Button, TextField, Tooltip, makeStyles, Modal } from '@material-ui
 import Drawflow from 'drawflow';
 // import { chart } from './chart.js';
 import { result } from 'lodash';
+import { object } from 'prop-types';
 
 const DrawflowWrapper = () => {
   const drawflowRef = useRef(null);
@@ -22,24 +23,24 @@ const DrawflowWrapper = () => {
     editor.reroute = true;
     dataToImport = {
       "drawflow": {
-          "Home": {
-              "data": {
-                  "1": {
-                      "id": 1,
-                      "name": "welcome",
-                      "data": {},
-                      "class": "welcome",
-                      "html": "\n    <div>\n      <div class=\"title-box\" style=\"line-height: 25px;\"><p>👏 <b>Welcome!!</b></p>\n        <p><b>ChatGPT Engine!!</b>🤖</p></div>\n      <div class=\"box\">\n        <p><b>Tradeep.ai</b> is model training platform.</p>\n        <p>Build Agents, Train them on financial asset.</p>\n\n        <p>Enrich their features<br>\n           Work with Chatgpt<br>\n           to empower your trading.<br>\n           <br>\n        <p><b><u>Shortkeys:</u></b></p>\n        <p>🎹 <b>Delete</b> for remove selected<br>\n        💠 Mouse Left Click == Move<br>\n        ❌ Mouse Right == Delete Option<br>\n        🔍 Ctrl + Wheel == Zoom<br>\n        📱 Mobile support<br>\n        ...</p>\n <div id='chart-container'></div>      </div>\n     <div class=\"p-10\"><textarea rows=\"1\" class=\"w-full p-10 m-auto welcome-textarea\" placeholder=\"To ChatGPT...\"></textarea><button class=\"py-5 px-10 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700\">BsSendFill</button><button style=\"float: right;\" class=\"py-5 px-10 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700\">BiCopy</button></div>    </div>\n    ",
-                      "typenode": false,
-                      "inputs": {},
-                      "outputs": {},
-                      "pos_x": 500,
-                      "pos_y": 50
-                  },
-              }
-          },
+        "Home": {
+          "data": {
+            "1": {
+              "id": 1,
+              "name": "welcome",
+              "data": {},
+              "class": "welcome",
+              "html": "\n    <div>\n      <div class=\"title-box\" style=\"line-height: 25px;\"><p>👏 <b>Welcome!!</b></p>\n        <p><b>ChatGPT Engine!!</b>🤖</p></div>\n      <div class=\"box\">\n        <p><b>Tradeep.ai</b> is model training platform.</p>\n        <p>Build Agents, Train them on financial asset.</p>\n\n        <p>Enrich their features<br>\n           Work with Chatgpt<br>\n           to empower your trading.<br>\n           <br>\n        <p><b><u>Shortkeys:</u></b></p>\n        <p>🎹 <b>Delete</b> for remove selected<br>\n        💠 Mouse Left Click == Move<br>\n        ❌ Mouse Right == Delete Option<br>\n        🔍 Ctrl + Wheel == Zoom<br>\n        📱 Mobile support<br>\n        ...</p>\n <div id='chart-container'></div>      </div>\n     <div class=\"p-10\"><textarea rows=\"1\" class=\"w-full p-10 m-auto welcome-textarea\" placeholder=\"To ChatGPT...\"></textarea><button class=\"py-5 px-10 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700\">BsSendFill</button><button style=\"float: right;\" class=\"py-5 px-10 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700\">BiCopy</button></div>    </div>\n    ",
+              "typenode": false,
+              "inputs": {},
+              "outputs": {},
+              "pos_x": 500,
+              "pos_y": 50
+            },
+          }
+        },
       }
-  }
+    }
     editor.start();
     editor.import(dataToImport);
 
@@ -58,7 +59,7 @@ const DrawflowWrapper = () => {
       undoCount = lastDataToImport.length - 1;
     })
 
-    editor.on('nodeRemoved', function() {
+    editor.on('nodeRemoved', function () {
       console.log(editor.export());
       lastDataToImport.push(editor.export());
       undoCount = lastDataToImport.length - 1;
@@ -78,7 +79,7 @@ const DrawflowWrapper = () => {
   for (var i = 0; i < elements.length; i++) {
     elements[i].addEventListener('touchend', drop, false);
     elements[i].addEventListener('touchmove', positionMobile, false);
-    elements[i].addEventListener('touchstart', drag, false );
+    elements[i].addEventListener('touchstart', drag, false);
   }
 
   var mobile_item_selec = '';
@@ -100,33 +101,42 @@ const DrawflowWrapper = () => {
   }
   
   function drop(ev) {
+    
+    define(['module'], function (module) {
+      console.log("sdfffffff");
+      console.log(module.id);
+      console.log(module.uri);
+    })
+
     lastDataToImport.push(editor.export());
     undoCount = lastDataToImport.length - 1;
     if (ev.type === "touchend") {
-      var parentdrawflow = document.elementFromPoint( mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
-      if(parentdrawflow != null) {
+      var parentdrawflow = document.elementFromPoint(mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
+      if (parentdrawflow != null) {
         addNodeToDrawFlow(mobile_item_selec, mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY);
       }
       mobile_item_selec = '';
     } else {
       ev.preventDefault();
-      var data = ev.dataTransfer.getData("node");
-      addNodeToDrawFlow(data, ev.clientX, ev.clientY);
+      var nodeName = ev.dataTransfer.getData("node");
+      addNodeToDrawFlow(nodeName, ev.clientX, ev.clientY);
+      // addModule().then(() => {
+      // })
     }
   }
 
   function addNodeToDrawFlow(name, pos_x, pos_y) {
-    if(editor.editor_mode === 'fixed') {
+    if (editor.editor_mode === 'fixed') {
       return false;
     }
-    pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
-    pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
+    pos_x = pos_x * (editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * (editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
+    pos_y = pos_y * (editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * (editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
 
     switch (name) {
       case 'environment':
-      var environment = `
+        var environment = `
         <div>
-          <div class="title-box"><i class="fa-solid fa-seedling"></i> Env(SelectAsset)<i class="fa fa-cog"></i></div>
+          <div class="title-box"><i class="fa-solid fa-seedling"></i> Env(SelectAsset)<i class="fa fa-cog" onclick="onCogClick('Env')"></i></div>
           <div class="box">
             <select>
               <option value="crypto">Crypto</option>
@@ -152,7 +162,7 @@ const DrawflowWrapper = () => {
           </div>
         </div>
       `;
-        editor.addNode('environment', 1,  1, pos_x, pos_y, 'environment', {}, environment );
+        editor.addNode('environment', 1, 1, pos_x, pos_y, 'environment', {}, environment);
         break;
       case 'state':
         var state = `
@@ -178,7 +188,7 @@ const DrawflowWrapper = () => {
             </div>
           </div>
         `
-        editor.addNode('state', 1, 1, pos_x, pos_y, 'state', {}, state );
+        editor.addNode('state', 1, 1, pos_x, pos_y, 'state', {}, state);
         break;
       case 'reward':
         var reward = `
@@ -193,7 +203,7 @@ const DrawflowWrapper = () => {
             </div>
           </div>
         `;
-        editor.addNode('reward', 1, 1, pos_x, pos_y, 'reward', {}, reward );
+        editor.addNode('reward', 1, 1, pos_x, pos_y, 'reward', {}, reward);
         break;
       case 'broker_account':
         var broker_account = `
@@ -210,7 +220,7 @@ const DrawflowWrapper = () => {
           </div>
         </div>
         `;
-        editor.addNode('broker_account', 1, 1, pos_x, pos_y, 'broker_account', {}, broker_account );
+        editor.addNode('broker_account', 1, 1, pos_x, pos_y, 'broker_account', {}, broker_account);
         break;
       case 'models':
         var models = `
@@ -225,33 +235,33 @@ const DrawflowWrapper = () => {
             </div>
           </div>
         `;
-        editor.addNode('models', 1, 1, pos_x, pos_y, 'models', {}, models );
+        editor.addNode('models', 1, 1, pos_x, pos_y, 'models', {}, models);
         break;
       case 'agents':
-          var agents = `
-            <div>
-              <div class="title-box"><i class="fa fa-building"></i> Agents<i class="fa fa-cog"></i></div>
-              <div class="box">
-                <select>
-                  <option value="ppo">PPO</option>
-                  <option value="sac">SAC</option>
-                  <option value="ddpg">DDPG</option>
-                  <option value="multiAgent_ddpg">Multi-Agent DDPG</option>
-                  <option value="a2c">A2C</option>
-                  <option value="td3">TD3</option>
-                </select>
-              </div>
+        var agents = `
+          <div>
+            <div class="title-box"><i class="fa fa-building"></i> Agents<i class="fa fa-cog"></i></div>
+            <div class="box">
+              <select>
+                <option value="ppo">PPO</option>
+                <option value="sac">SAC</option>
+                <option value="ddpg">DDPG</option>
+                <option value="multiAgent_ddpg">Multi-Agent DDPG</option>
+                <option value="a2c">A2C</option>
+                <option value="td3">TD3</option>
+              </select>
             </div>
-          `;
-          editor.addNode('agents', 1, 1, pos_x, pos_y, 'agents', {}, agents );
-          break;
+          </div>
+        `;
+        editor.addNode('agents', 1, 1, pos_x, pos_y, 'agents', {}, agents);
+        break;
       case 'event_logger':
         var event_logger = `
         <div>
           <div class="title-box"><i class="fas fa-file-alt"></i> Event Logger <i class="fa fa-cog"></i></div>
         </div>
         `;
-        editor.addNode('event_logger', 1, 1, pos_x, pos_y, 'event_logger', {}, event_logger );
+        editor.addNode('event_logger', 1, 1, pos_x, pos_y, 'event_logger', {}, event_logger);
         break;
       case 'action_space':
         var action_space = `
@@ -265,7 +275,7 @@ const DrawflowWrapper = () => {
             </div>
           </div>
         `;
-        editor.addNode('action_space', 1, 1, pos_x, pos_y, 'action_space', {}, action_space );
+        editor.addNode('action_space', 1, 1, pos_x, pos_y, 'action_space', {}, action_space);
         break;
       case 'features':
         var features = `
@@ -287,7 +297,7 @@ const DrawflowWrapper = () => {
             </div>
           </div>
         `;
-        editor.addNode('features', 1, 1, pos_x, pos_y, 'features', {}, features );
+        editor.addNode('features', 1, 1, pos_x, pos_y, 'features', {}, features);
         break;
       case 'social_channels':
         var social_channels = `
@@ -306,7 +316,7 @@ const DrawflowWrapper = () => {
             </div>
           </div>
         `;
-        editor.addNode('social_channels', 1, 0, pos_x, pos_y, 'social_channels', {}, social_channels );
+        editor.addNode('social_channels', 1, 0, pos_x, pos_y, 'social_channels', {}, social_channels);
         break;
       default:
         var other = `
@@ -320,7 +330,7 @@ const DrawflowWrapper = () => {
           </div>
         </div>
         `
-        editor.addNode(name, 1, 1, pos_x, pos_y, name, {}, other );
+        editor.addNode(name, 1, 1, pos_x, pos_y, name, {}, other);
         break;
     }
   }
@@ -338,7 +348,7 @@ const DrawflowWrapper = () => {
   }
 
   function redo() {
-    undoCount = redoCount-1;
+    undoCount = redoCount - 1;
     if (redoCount < lastDataToImport.length - 1) {
       redoCount++;
       editor.import(lastDataToImport[redoCount]);
@@ -346,24 +356,26 @@ const DrawflowWrapper = () => {
   }
 
   function changeModule(event) {
-    lastDataToImport = [];
-    undoCount = 0;
-    var all = document.querySelectorAll(".menu ul li");
-    for (var i = 0; i < all.length; i++) {
-      all[i].classList.remove('selected');
-    }
-    event.target.classList.add('selected');
-    editor.changeModule(event.target.getAttribute('module-name'));
+    return new Promise((resolve, reject) => {
+      lastDataToImport = [];
+      undoCount = 0;
+      var all = document.querySelectorAll(".menu ul li");
+      for (var i = 0; i < all.length; i++) {
+        all[i].classList.remove('selected');
+      }
+      event.target.classList.add('selected');
+      editor.changeModule(event.target.getAttribute('module-name'));
+    })
   }
 
   function changeMode(option) {
-  //console.log(lock.id);
-    if(option == 'lock') {
-      editor.editor_mode='fixed';
+    //console.log(lock.id);
+    if (option == 'lock') {
+      editor.editor_mode = 'fixed';
       lock.current.style.display = 'none';
       unlock.current.style.display = 'block';
     } else {
-      editor.editor_mode='edit';
+      editor.editor_mode = 'edit';
       lock.current.style.display = 'block';
       unlock.current.style.display = 'none';
     }
@@ -374,8 +386,9 @@ const DrawflowWrapper = () => {
   }
 
   const handleExport = () => {
-    Swal.fire({ title: 'Export',
-      html: '<pre><code>'+JSON.stringify(editor.export(), null,4)+'</code></pre>'
+    Swal.fire({
+      title: 'Export',
+      html: '<pre><code>' + JSON.stringify(editor.export(), null, 4) + '</code></pre>'
     })
   }
 
@@ -397,62 +410,67 @@ const DrawflowWrapper = () => {
       icon: 'success',
       confirmButtonText: 'Sure'
     })
-    .then((result) => {
-      if (result.isConfirmed) {
-        var tabName = event.target.getAttribute('module-name');
-        var tab = document.getElementById(tabName);
-        tab.parentNode.removeChild(tab);
-        // dataToImport.deletedModule = dataToImport.drawflow[tabName];
-        // delete dataToImport.drawflow[tabName];
-        // console.log(dataToImport.drawflow);
-      }
-    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          var tabName = event.target.getAttribute('module-name');
+          var tab = document.getElementById(tabName);
+          tab.parentNode.removeChild(tab);
+
+          delete editor.drawflow.drawflow[tabName];
+        }
+      })
   }
 
   const addModule = () => {
-    Swal.fire({
-      title: "Create New Agent/Model",
-      html: '<input placeholder="Input tag name..." id="add_new_tab" margin="normal" />'
-    })
-    .then((result) => {
-      if (result.isConfirmed) {
-        var tabName = document.getElementById("add_new_tab").value;
-        if (tabName) {
-          if (dataToImport.drawflow[tabName]) {
-            Swal.fire({
-              title: "A tab with the same name already exists.",
-              icon: 'warning'
-            })
-          } else {
-            var tabData = {data: {}};
-            lastDataToImport.push(editor.export());
-            lastDataToImport[lastDataToImport.length-1].drawflow[tabName] = tabData;
-            const newHTMLNode = document.createElement("li");
-            newHTMLNode.addEventListener('click', changeModule);
-            newHTMLNode.setAttribute("module-name", tabName);
-            newHTMLNode.setAttribute("id", tabName);
-            newHTMLNode.innerHTML = tabName + ' <button class="tab-remove"><img class="tab-remove-icon" src="./assets/images/remove-icon.png" /></button>';
-            const tabs = document.getElementById("tab_buttons");
-            const plusButton = tabs.lastChild;
-            tabs.insertBefore(newHTMLNode, plusButton);  
-            dataToImport.drawflow
-            console.log(dataToImport.drawflow);
+    return new Promise((resolve, reject) => {
+      Swal.fire({
+        title: "Create New Agent/Model",
+        html: '<input placeholder="Input tag name..." id="add_new_tab" margin="normal" />'
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            var tabName = document.getElementById("add_new_tab").value;
+            if (tabName) {
+              if (editor.export().drawflow[tabName]) {
+                Swal.fire({
+                  title: "A tab with the same name already exists.",
+                  icon: 'warning'
+                })
+              } else {
+                var tabData = { data: {} };
+                lastDataToImport.push(editor.export());
+                lastDataToImport[lastDataToImport.length - 1].drawflow[tabName] = tabData;
 
-            editor.clear();
-            editor.import(lastDataToImport[lastDataToImport.length-1]);
-            const remove = document.getElementsByClassName("tab-remove");
-            const removeIcons = document.getElementsByClassName("tab-remove-icon");
-            remove[remove.length - 1].addEventListener("click", tabRemove);            
-            remove[remove.length - 1].setAttribute("module-name", tabName);
-            removeIcons[remove.length - 1].setAttribute("module-name", tabName);
+                const newHTMLNode = document.createElement("li");
+                newHTMLNode.addEventListener('click', changeModule);
+                newHTMLNode.setAttribute("module-name", tabName);
+                newHTMLNode.setAttribute("id", tabName);
+                newHTMLNode.innerHTML = tabName + ' <button class="tab-remove"><img class="tab-remove-icon" src="./assets/images/remove-icon.png" /></button>';
+                
+                const tabs = document.getElementById("tab_buttons");
+                const plusButton = tabs.lastChild;
+                
+                tabs.insertBefore(newHTMLNode, plusButton);
+                dataToImport.drawflow
+
+                editor.clear();
+                editor.import(lastDataToImport[lastDataToImport.length - 1]);
+                const remove = document.getElementsByClassName("tab-remove");
+                const removeIcons = document.getElementsByClassName("tab-remove-icon");
+                remove[remove.length - 1].addEventListener("click", tabRemove);
+                remove[remove.length - 1].setAttribute("module-name", tabName);
+                removeIcons[remove.length - 1].setAttribute("module-name", tabName);
+
+                resolve(tabName)
+              }
+            } else {
+              Swal.fire({
+                title: "Input the tag name",
+                icon: 'warning'
+              })
+            }
           }
-        } else {
-          Swal.fire({
-            title: "Input the tag name",
-            icon: 'warning'
-          })
-        }
-      }
+        })
     })
   }
 
@@ -461,27 +479,27 @@ const DrawflowWrapper = () => {
       title: "Create New Module/Strategy",
       html: '<input placeholder="Input here..." id="add_new_module" margin="normal" />'
     })
-    .then((result) => {
-      if (result.isConfirmed) {
-        var moduleName = document.getElementById('add_new_module').value;
-        if (moduleName) {
-          const newHTMLNode = document.createElement("div");
-          newHTMLNode.setAttribute("data-node", moduleName);
-          newHTMLNode.setAttribute("class", 'drag-drawflow');
-          newHTMLNode.setAttribute("draggable", 'true');
-          newHTMLNode.addEventListener("dragstart", drag);
-          newHTMLNode.innerHTML = `<i class="fa fa-tasks"></i><span> ${moduleName}</span>`;
-          const modules = document.getElementById('left_sidebar');
-          const addButton = modules.lastChild;
-          modules.insertBefore(newHTMLNode, addButton);
-        } else {
-          Swal.fire({
-            title: "Input the module name",
-            icon: 'warning'
-          })
+      .then((result) => {
+        if (result.isConfirmed) {
+          var moduleName = document.getElementById('add_new_module').value;
+          if (moduleName) {
+            const newHTMLNode = document.createElement("div");
+            newHTMLNode.setAttribute("data-node", moduleName);
+            newHTMLNode.setAttribute("class", 'drag-drawflow');
+            newHTMLNode.setAttribute("draggable", 'true');
+            newHTMLNode.addEventListener("dragstart", drag);
+            newHTMLNode.innerHTML = `<i class="fa fa-tasks"></i><span> ${moduleName}</span>`;
+            const modules = document.getElementById('left_sidebar');
+            const addButton = modules.lastChild;
+            modules.insertBefore(newHTMLNode, addButton);
+          } else {
+            Swal.fire({
+              title: "Input the module name",
+              icon: 'warning'
+            })
+          }
         }
-      }
-    })
+      })
   }
 
   const startTootipStyles = makeStyles((theme) => ({
@@ -521,127 +539,127 @@ const DrawflowWrapper = () => {
 
 
   return (
-      // <div ref={drawflowRef} style={{ height: '500px', width: '70%',background:"red" }} />
-      <Box>
-        <Box className="wrapper">
-          <Box className="col" id='left_sidebar'>
-            <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="environment">
-              <i className="fa-solid fa-seedling"></i><span> Env(SelectAsset)</span>
-            </Box>
-            <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="agents">
-              <i className="fa fa-building"></i><span> Agents</span>
-            </Box>
-            <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="state">
-              <i className="fas fa-business-time"></i><span> State </span>
-            </Box>
-            <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="reward">
-              <i className="fas fa-medal"></i><span> Reward</span>
-            </Box>
-            <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="action_space">
-              <i className="fab fa-buysellads"></i><span> ActionSpace</span>
-            </Box>
-            <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="features">
-              <i className="fas fa-rocket"></i><span> Features</span>
-            </Box>
-            <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="social_channels">
-              <i className="fa-brands fa-telegram"></i><span> Social Channels</span>
-            </Box>
-            <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="event_logger">
-              <i className="fas fa-file-alt"></i><span> Event logger</span>
-            </Box>
-            <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="models">
-              <i className="fa fa-tasks"></i><span> 3rd Party Data</span>
-            </Box>
-            <Box className="add-new-element" onClick={addElement}>
-              <i className="fa fa-plus"></i><span> Add New</span>
-            </Box>
+    // <div ref={drawflowRef} style={{ height: '500px', width: '70%',background:"red" }} />
+    <Box>
+      <Box className="wrapper">
+        <Box className="col" id='left_sidebar'>
+          <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="environment">
+            <i className="fa-solid fa-seedling"></i><span> Env(SelectAsset)</span>
           </Box>
-          <Box className="col-right" style={{background:"black"}}>
-            <Box className="menu" style={{color: "black"}}>
-              <ul id='tab_buttons'>
-                <li onClick={changeModule} module-name="Home" className="selected">Home</li>
-                <li onClick={addModule}><i className='fa fa-plus'></i></li>
-              </ul>
-            </Box>
-            <Box id="drawflow" onDrop={drop} onDragOver={allowDrop}>
-              <div id="chart-container"></div>
-              <Tooltip classes={{ tooltip: startClasses.customTooltip }} placement="right" title="Start Trading">
-                <Box className='bar-play' onClick={handleOpen}>
-                  <button><i className='btn-controls-play fas fa-play'></i></button>
-                </Box>
+          <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="agents">
+            <i className="fa fa-building"></i><span> Agents</span>
+          </Box>
+          <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="state">
+            <i className="fas fa-business-time"></i><span> State </span>
+          </Box>
+          <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="reward">
+            <i className="fas fa-medal"></i><span> Reward</span>
+          </Box>
+          <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="action_space">
+            <i className="fab fa-buysellads"></i><span> ActionSpace</span>
+          </Box>
+          <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="features">
+            <i className="fas fa-rocket"></i><span> Features</span>
+          </Box>
+          <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="social_channels">
+            <i className="fa-brands fa-telegram"></i><span> Social Channels</span>
+          </Box>
+          <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="event_logger">
+            <i className="fas fa-file-alt"></i><span> Event logger</span>
+          </Box>
+          <Box className="drag-drawflow" draggable="true" onDragStart={drag} data-node="models">
+            <i className="fa fa-tasks"></i><span> 3rd Party Data</span>
+          </Box>
+          <Box className="add-new-element" onClick={addElement}>
+            <i className="fa fa-plus"></i><span> Add New</span>
+          </Box>
+        </Box>
+        <Box className="col-right" style={{ background: "black" }}>
+          <Box className="menu" style={{ color: "black" }}>
+            <ul id='tab_buttons'>
+              <li onClick={changeModule} module-name="Home" className="selected">Home</li>
+              <li onClick={addModule}><i className='fa fa-plus'></i></li>
+            </ul>
+          </Box>
+          <Box id="drawflow" onDrop={drop} onDragOver={allowDrop}>
+            <div id="chart-container"></div>
+            <Tooltip classes={{ tooltip: startClasses.customTooltip }} placement="right" title="Start Trading">
+              <Box className='bar-play' onClick={handleOpen}>
+                <button><i className='btn-controls-play fas fa-play'></i></button>
+              </Box>
+            </Tooltip>
+            <Box className='bar-controls'>
+              <Tooltip title="Undo">
+                <Button style={{ minWidth: '50px' }} onClick={undo}><i className='fas fa-undo'></i></Button>
               </Tooltip>
-              <Box className='bar-controls'>
-                <Tooltip title="Undo">
-                  <Button style={{minWidth: '50px'}} onClick={undo}><i className='fas fa-undo'></i></Button>
-                </Tooltip>
-                <Tooltip title="Redo">
-                  <Button style={{minWidth: '50px'}} onClick={redo}><i className='fas fa-redo'></i></Button>
-                </Tooltip>
-                <Tooltip title="Notes">
-                  <Button style={{minWidth: '50px'}}><i className='fas fa-file-alt'></i></Button>
-                </Tooltip>
-                <Tooltip title="Auto Aligne">
-                  <Button style={{minWidth: '50px'}}><i className='fas fa-plane'></i></Button>
-                </Tooltip>
-                <Tooltip title="Save">
-                  <Button style={{minWidth: '50px'}}><i className='fas fa-save'></i></Button>
-                </Tooltip>
-                <Tooltip title="Share">
-                  <Button style={{minWidth: '50px'}}><i className='fas fa-share-alt'></i></Button>
-                </Tooltip>
-                <Tooltip title="Export">
-                  <Button style={{minWidth: '50px'}} onClick={handleExport}><i className='fas fa-file-export'></i></Button>
-                </Tooltip>
-              </Box>
-              <Box className="btn-lock" style={{height: '35px'}}>
-                <Tooltip title="Lock">
-                  <Button style={{minWidth: '50px', lineHeight: '0px'}} ref={lock} onClick={() => changeMode('lock')}><i className="fas fa-lock"></i></Button>
-                </Tooltip>
-                <Tooltip title="Unlock">
-                  <Button ref={unlock} onClick={() => changeMode('unlock')} style={{display:'none', minWidth: "50px", lineHeight: '0px'}}><i className="fas fa-lock-open"></i></Button>
-                </Tooltip>
-              </Box>
-              <Box className="bar-zoom">
-                <Tooltip title="Zoom Out">
-                  <Button style={{minWidth: '50px'}} className='btn-zoom' onClick={handleZoomOut}><i className="fas fa-search-minus"></i></Button>
-                </Tooltip>
-                <Tooltip title="Reset">
-                  <Button style={{minWidth: '50px'}} className='btn-zoom' onClick={handleZoomReset}><i className="fas fa-search"></i></Button>
-                </Tooltip>
-                <Tooltip title="Zoom In">
-                  <Button style={{minWidth: '50px'}} className='btn-zoom-last' onClick={handleZoomIn}><i className="fas fa-search-plus"></i></Button>
-                </Tooltip>
-              </Box>
+              <Tooltip title="Redo">
+                <Button style={{ minWidth: '50px' }} onClick={redo}><i className='fas fa-redo'></i></Button>
+              </Tooltip>
+              <Tooltip title="Notes">
+                <Button style={{ minWidth: '50px' }}><i className='fas fa-file-alt'></i></Button>
+              </Tooltip>
+              <Tooltip title="Auto Aligne">
+                <Button style={{ minWidth: '50px' }}><i className='fas fa-plane'></i></Button>
+              </Tooltip>
+              <Tooltip title="Save">
+                <Button style={{ minWidth: '50px' }}><i className='fas fa-save'></i></Button>
+              </Tooltip>
+              <Tooltip title="Share">
+                <Button style={{ minWidth: '50px' }}><i className='fas fa-share-alt'></i></Button>
+              </Tooltip>
+              <Tooltip title="Export">
+                <Button style={{ minWidth: '50px' }} onClick={handleExport}><i className='fas fa-file-export'></i></Button>
+              </Tooltip>
+            </Box>
+            <Box className="btn-lock" style={{ height: '35px' }}>
+              <Tooltip title="Lock">
+                <Button style={{ minWidth: '50px', lineHeight: '0px' }} ref={lock} onClick={() => changeMode('lock')}><i className="fas fa-lock"></i></Button>
+              </Tooltip>
+              <Tooltip title="Unlock">
+                <Button ref={unlock} onClick={() => changeMode('unlock')} style={{ display: 'none', minWidth: "50px", lineHeight: '0px' }}><i className="fas fa-lock-open"></i></Button>
+              </Tooltip>
+            </Box>
+            <Box className="bar-zoom">
+              <Tooltip title="Zoom Out">
+                <Button style={{ minWidth: '50px' }} className='btn-zoom' onClick={handleZoomOut}><i className="fas fa-search-minus"></i></Button>
+              </Tooltip>
+              <Tooltip title="Reset">
+                <Button style={{ minWidth: '50px' }} className='btn-zoom' onClick={handleZoomReset}><i className="fas fa-search"></i></Button>
+              </Tooltip>
+              <Tooltip title="Zoom In">
+                <Button style={{ minWidth: '50px' }} className='btn-zoom-last' onClick={handleZoomIn}><i className="fas fa-search-plus"></i></Button>
+              </Tooltip>
             </Box>
           </Box>
         </Box>
-        <Modal open={open} onClose={handleClose}>
-          <div className={modalClasses.paper}>
-            <h2>Trading Config</h2>
-            <Box
-              sx={{
-                maxWidth: '100%',
-              }}
-            >
-              <TextField fullWidth label="Device" id="trainingDevice" />
-              <TextField fullWidth label="Steps" id="trainingSteps" />
-              <TextField fullWidth label="Historical Data" id="historicalData" />
-              <TextField fullWidth label="Window Size" id="windowSize" />
-            </Box>
-            <Box className='start-btns-box'>
-              <Button className='start-config-btn' variant="contained" color="primary" onClick={handleClose}>
-                <img style={{width: '23px'}} src="./assets/images/sololearn.png" />
-                 Start trading
-              </Button>
-              <Button className='start-config-btn' variant="contained" color="primary" onClick={handleClose}>
-                Cancel
-              </Button>
-            </Box>
-          </div>
-        </Modal>
-
       </Box>
-    );
+      <Modal open={open} onClose={handleClose}>
+        <div className={modalClasses.paper}>
+          <h2>Trading Config</h2>
+          <Box
+            sx={{
+              maxWidth: '100%',
+            }}
+          >
+            <TextField fullWidth label="Device" id="trainingDevice" />
+            <TextField fullWidth label="Steps" id="trainingSteps" />
+            <TextField fullWidth label="Historical Data" id="historicalData" />
+            <TextField fullWidth label="Window Size" id="windowSize" />
+          </Box>
+          <Box className='start-btns-box'>
+            <Button className='start-config-btn' variant="contained" color="primary" onClick={handleClose}>
+              <img style={{ width: '23px' }} src="./assets/images/sololearn.png" />
+              Start trading
+            </Button>
+            <Button className='start-config-btn' variant="contained" color="primary" onClick={handleClose}>
+              Cancel
+            </Button>
+          </Box>
+        </div>
+      </Modal>
+
+    </Box>
+  );
 };
 
 export default DrawflowWrapper;
