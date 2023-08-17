@@ -99,14 +99,11 @@ const DrawflowWrapper = () => {
       ev.dataTransfer.setData("node", ev.target.getAttribute('data-node'));
     }
   }
-  
+
   function drop(ev) {
-    
-    define(['module'], function (module) {
-      console.log("sdfffffff");
-      console.log(module.id);
-      console.log(module.uri);
-    })
+
+    var allModules = document.querySelectorAll(".menu ul li");
+    const isHome = allModules[0].getAttribute('class').includes('selected');
 
     lastDataToImport.push(editor.export());
     undoCount = lastDataToImport.length - 1;
@@ -119,9 +116,21 @@ const DrawflowWrapper = () => {
     } else {
       ev.preventDefault();
       var nodeName = ev.dataTransfer.getData("node");
-      addNodeToDrawFlow(nodeName, ev.clientX, ev.clientY);
-      // addModule().then(() => {
-      // })
+      if (isHome) {
+        addModule().then((tabName) => {
+          editor.changeModule(tabName);
+          var allModules = document.querySelectorAll(".menu ul li");
+          allModules.forEach(module => {
+            module.classList.remove('selected');
+            if (module.getAttribute('id') === tabName) {
+              module.setAttribute('class', 'selected')
+            }
+          });
+          addNodeToDrawFlow(nodeName, ev.clientX, ev.clientY);
+        })
+      } else {
+        addNodeToDrawFlow(nodeName, ev.clientX, ev.clientY);
+      }
     }
   }
 
@@ -446,10 +455,10 @@ const DrawflowWrapper = () => {
                 newHTMLNode.setAttribute("module-name", tabName);
                 newHTMLNode.setAttribute("id", tabName);
                 newHTMLNode.innerHTML = tabName + ' <button class="tab-remove"><img class="tab-remove-icon" src="./assets/images/remove-icon.png" /></button>';
-                
+
                 const tabs = document.getElementById("tab_buttons");
                 const plusButton = tabs.lastChild;
-                
+
                 tabs.insertBefore(newHTMLNode, plusButton);
                 dataToImport.drawflow
 
