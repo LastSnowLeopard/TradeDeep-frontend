@@ -47,7 +47,7 @@ function Model(props) {
           TabIndicatorProps={{
             children: <Divider className="w-full h-full rounded-full opacity-50" />,
           }}
-          style={{backgroundColor: '#414141', paddingTop: '1.2rem'}}
+          style={{ paddingTop: '1.2rem' }}
         >
 
 
@@ -60,9 +60,9 @@ function Model(props) {
             className="text-14 font-semibold min-h-40 min-w-64 mx-4 modelNavbarBtn"
             disableRipple
             label="Features"
-            // icon={<i className="fas fa-rocket"></i>}
+          // icon={<i className="fas fa-rocket"></i>}
           />
-           <Tab
+          <Tab
             className="text-14 font-semibold min-h-40 min-w-64 mx-4 modelNavbarBtn"
             disableRipple
             label="Training Result"
@@ -80,7 +80,7 @@ function Model(props) {
         </Tabs>
       </Box>
       <Box className={classes.content}>
-        <div className="p-12 pl-0 lg:ltr:pr-0 lg:rtl:pl-0" style={{backgroundColor: "#414141"}}>
+        <div className="p-12 pl-0 lg:ltr:pr-0 lg:rtl:pl-0">
           {tabValue === 0 && <CreateModel />}
           {tabValue === 2 && <TrainingResult />}
           {tabValue === 1 && <BackTest />}

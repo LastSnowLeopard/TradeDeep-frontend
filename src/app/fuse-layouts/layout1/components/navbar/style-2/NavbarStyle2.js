@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
         '& .avatar': {
           width: 40,
           height: 40,
-          bottom: 104,
+          // bottom: 104,
           padding: 0,
         },
       },

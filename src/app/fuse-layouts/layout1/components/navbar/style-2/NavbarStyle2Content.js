@@ -2,25 +2,25 @@ import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Logo from 'app/fuse-layouts/shared-components/Logo';
+import MiniLogo from 'app/fuse-layouts/shared-components/MiniLogo';
 import NavbarToggleButton from 'app/fuse-layouts/shared-components/NavbarToggleButton';
 import Navigation from 'app/fuse-layouts/shared-components/Navigation';
 import UserNavbarHeader from 'app/fuse-layouts/shared-components/UserNavbarHeader';
 import clsx from 'clsx';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
     color: theme.palette.text.primary,
     '& ::-webkit-scrollbar-thumb': {
-      boxShadow: `inset 0 0 0 20px ${
-        theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.24)' : 'rgba(255, 255, 255, 0.24)'
-      }`,
+      boxShadow: `inset 0 0 0 20px ${theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.24)' : 'rgba(255, 255, 255, 0.24)'
+        }`,
     },
     '& ::-webkit-scrollbar-thumb:active': {
-      boxShadow: `inset 0 0 0 20px ${
-        theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.37)' : 'rgba(255, 255, 255, 0.37)'
-      }`,
+      boxShadow: `inset 0 0 0 20px ${theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.37)' : 'rgba(255, 255, 255, 0.37)'
+        }`,
     },
   },
   content: {
@@ -40,6 +40,19 @@ function NavbarStyle2Content(props) {
   const classes = useStyles();
   const theme = useTheme();
 
+  const config = useSelector(({ fuse }) => fuse.settings.current.layout.config);
+  const navbar = useSelector(({ fuse }) => fuse.navbar);
+
+  const { folded } = config.navbar;
+  const foldedAndClosed = folded && !navbar.foldedOpen;
+  const foldedAndOpened = folded && navbar.foldedOpen;
+
+  console.log(
+    "folded: " + folded,
+    "\nfoldedAndClosed: " + foldedAndClosed,
+    "\nfoldedAndOpened: " + foldedAndOpened,
+  );
+
   return (
     <div
       className={clsx(
@@ -54,10 +67,12 @@ function NavbarStyle2Content(props) {
         className="flex flex-row items-center flex-shrink h-48 md:h-64 min-h-48 md:min-h-64 px-12 shadow-0"
       >
         <div className="flex flex-1 mx-4">
-          <Logo />
+          {!folded && <Logo />}
+          {foldedAndOpened && folded && <Logo />}
+          {foldedAndClosed && folded && <MiniLogo />}
         </div>
 
-        <NavbarToggleButton className="w-40 h-40 p-0" />
+        {(!folded || (folded && foldedAndOpened && !foldedAndClosed)) && <NavbarToggleButton className="w-40 h-40 p-0" />}
       </AppBar>
 
       <FuseScrollbars

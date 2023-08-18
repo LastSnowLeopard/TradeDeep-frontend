@@ -51,70 +51,40 @@ const useStyles = makeStyles((theme) => ({
 function FuseNavVerticalItem(props) {
   const dispatch = useDispatch();
   const { item, nestedLevel, onItemClick } = props;
-  const { open } = useSelector(({ fuse }) => fuse.navbar);
   const classes = useStyles({
     itemPadding: nestedLevel > 0 ? 28 + nestedLevel * 16 : 12,
   });
 
   return useMemo(
     () => (
-      <>
-        {
-          open ?
-            <ListItem
-              button
-              component={NavLinkAdapter}
-              to={item.url}
-              activeClassName="active"
-              className={clsx(classes.item, 'fuse-list-item')}
-              onClick={() => onItemClick && onItemClick(item)}
-              exact={item.exact}
-            >
-              {item.icon && (
-                <Icon
-                  className={clsx('fuse-list-item-icon text-20 flex-shrink-0', item.iconClass)}
-                  color="action"
-                >
-                  {item.icon}
-                </Icon>
-              )}
+      <ListItem
+        button
+        component={NavLinkAdapter}
+        to={item.url}
+        activeClassName="active"
+        className={clsx(classes.item, 'fuse-list-item')}
+        onClick={() => onItemClick && onItemClick(item)}
+        exact={item.exact}
+      >
+        {item.icon && (
+          <Icon
+            className={clsx('fuse-list-item-icon text-20 flex-shrink-0', item.iconClass)}
+            color="action"
+          >
+            {item.icon}
+          </Icon>
+        )}
 
-              {open && (
-                <ListItemText
-                  className="fuse-list-item-text"
-                  primary={item.title}
-                  classes={{ primary: 'text-13 font-medium fuse-list-item-text-primary' }}
-                />
-              )}
+        <ListItemText
+          className="fuse-list-item-text"
+          primary={item.title}
+          classes={{ primary: 'text-13 font-medium fuse-list-item-text-primary' }}
+        />
 
-              {item.badge && <FuseNavBadge badge={item.badge} />}
-            </ListItem> :
-            <Tooltip title={item.title} placement='right'>
-              <ListItem
-                button
-                component={NavLinkAdapter}
-                to={item.url}
-                activeClassName="active"
-                className={clsx(classes.item, 'fuse-list-item')}
-                onClick={() => onItemClick && onItemClick(item)}
-                exact={item.exact}
-              >
-                {item.icon && (
-                  <Icon
-                    className={clsx('fuse-list-item-icon text-20 flex-shrink-0', item.iconClass)}
-                    color="action"
-                  >
-                    {item.icon}
-                  </Icon>
-                )}
-
-                {item.badge && <FuseNavBadge badge={item.badge} />}
-              </ListItem>
-            </Tooltip>
-        }
-      </>
+        {item.badge && <FuseNavBadge badge={item.badge} />}
+      </ListItem>
     ),
-    [classes.item, item, onItemClick, open]
+    [classes.item, item, onItemClick]
   );
 }
 

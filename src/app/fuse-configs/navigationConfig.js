@@ -165,6 +165,14 @@ const navigationConfig = [
         icon: 'person',
         url: '/userdetails',
       },
+      {
+        id: 'accounts-component-user',
+        title: 'Payments',
+        translate: 'Payments',
+        type: 'item',
+        icon: 'paypal',
+        url: '/payments',
+      },
       
    ],
 
