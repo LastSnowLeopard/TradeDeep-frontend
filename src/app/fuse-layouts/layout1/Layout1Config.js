@@ -6,7 +6,7 @@ const config = {
     navbar: {
       display: true,
       style: 'style-2',
-      folded: true,
+      folded: false,
       position: 'left',
     },
     toolbar: {

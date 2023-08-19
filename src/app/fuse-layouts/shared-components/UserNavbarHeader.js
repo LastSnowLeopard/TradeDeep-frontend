@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     background: theme.palette.background.default,
-    transition: theme.transitions.create('all', {
-      duration: theme.transitions.duration.shortest,
-      easing: theme.transitions.easing.easeInOut,
-    }),
+    // transition: theme.transitions.create(['width', 'height'], {
+    //   duration: theme.transitions.duration.shortest,
+    //   easing: theme.transitions.easing.easeInOut,
+    // }),
     bottom: 0,
     '& > img': {
       borderRadius: '50%',
