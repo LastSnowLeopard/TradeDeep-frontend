@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Modal, TextField, Select, Button } from "@material-ui/core";
+import { Modal, TextField, Box, Button } from "@material-ui/core";
+// import { Box, Button } from "@mui/material";
+import Rating from "@mui/material/Rating";
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -16,23 +18,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function AddAccountModal(props) {
+function Top3EditModal(props) {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const { handleClose, open, item } = props;
 
   return (
     <div>
-      <Button variant="contained" color="secondary" onClick={handleOpen} xs={12}>
-        Connect Account
-      </Button>
       <Modal
         aria-labelledby="add-account-modal-title"
         aria-describedby="add-account-modal-description"
@@ -41,48 +33,43 @@ function AddAccountModal(props) {
         onClose={handleClose}
       >
         <div className={classes.paper}>
-          <h2 id="add-account-modal-title">Add Account</h2>
           <TextField
-            label="Account Name"
+            label="Image URL"
             variant="outlined"
             fullWidth
             margin="normal"
-          />
-          <br />
-          <Select
-            labelId="outlined-label"
-            id="outlined-label-select"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-          >
-            <option value="">Metatrader4</option>
-            <option value="broker1">Metatrader5</option>
-            <option value="broker2">InteractiveBrokers</option>
-            <option value="broker3">Bitfinex</option>
-          </Select>
-          <br />
-          <TextField
-            label="IP Address/Key"
-            variant="outlined"
-            fullWidth
-            margin="normal"
+            defaultValue={item.image}
           />
           <br />
           <TextField
-            label="Socket Id / Secret"
+            label="Name"
             variant="outlined"
             fullWidth
             margin="normal"
+            defaultValue={item.name}
           />
           <br />
-          <Button variant="contained" color="secondary">
-            Add Account
-          </Button>
+          <TextField
+            label="URL"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            defaultValue={item.url}
+          />
+          <br />
+          <Rating defaultValue={item.rating} size="large"/>
+          <Box display={'flex'} justifyContent={'end'} gap={2}>
+            <Button color="secondary" variant="contained">
+              Save
+            </Button>
+            <Button variant="contained" color="danger">
+              Delete
+            </Button>
+          </Box>
         </div>
       </Modal>
     </div>
   );
 }
 
-export default AddAccountModal;
+export default Top3EditModal;

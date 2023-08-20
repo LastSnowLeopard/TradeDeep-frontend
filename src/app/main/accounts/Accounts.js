@@ -26,6 +26,8 @@ import Rating from '@mui/material/Rating';
 import React from "react";
 import { Edit as EditIcon, Visibility as VisibilityIcon } from "@material-ui/icons";
 import AddAccountModal from "./modalshow"
+import Top3 from "./Top3/Top3";
+import Alert from "./Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,11 +58,9 @@ function Accounts(props) {
   // Sample data for the table
   const tableData = [{ name: "John Doe", broker: "TD Ameritrade", cash: "$5000", }];
 
-  // Sample data for the list
-  const listData = [{ image: "https://via.placeholder.com/150", rating: 4, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", }, { image: "https://via.placeholder.com/150", rating: 3, text: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", }, { image: "https://via.placeholder.com/150", rating: 5, text: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", },];
-
   return (
     <>
+      <Alert />
       <Box
         className="conrow"
         style={{
@@ -116,31 +116,32 @@ function Accounts(props) {
                         <TableCell>{row.broker}</TableCell>
                         <TableCell>{row.cash}</TableCell>
                         <TableCell>
-                        <Link to="/mAccount">
-                          <IconButton>
-                            <EditIcon />
-                          </IconButton>
-                        </Link>
-                        <Link to="/mAccount">
-                          <IconButton>
-                            <VisibilityIcon />
-                          </IconButton>
-                        </Link>
-                      </TableCell>
+                          <Link to="/mAccount">
+                            <IconButton>
+                              <EditIcon />
+                            </IconButton>
+                          </Link>
+                          <Link to="/mAccount">
+                            <IconButton>
+                              <VisibilityIcon />
+                            </IconButton>
+                          </Link>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
               </TableContainer>
             </Grid>
-            <Grid 
-  style={{margin:"20px"}}
-  item xs={12}
-  sm={12}
-  lg={3}
->
-  {/* Column 2 content */}
-  <Box boxShadow={3} p={2} bgcolor="background.paper">
+            <Grid
+              style={{ margin: "20px" }}
+              item xs={12}
+              sm={12}
+              lg={3}
+            >
+              {/* Column 2 content */}
+              <Top3 />
+              {/* <Box boxShadow={3} p={2} bgcolor="background.paper">
     <Grid container spacing={2} display="flex" alignItems="center" flexDirection="column" >
       {listData.map((item) => (
         <Box boxShadow={1} p={2} bgcolor="background.paper">
@@ -168,8 +169,8 @@ function Accounts(props) {
         </Box>
       ))}
     </Grid>
-  </Box>
-</Grid>
+  </Box> */}
+            </Grid>
 
           </Grid>
         </Box>
