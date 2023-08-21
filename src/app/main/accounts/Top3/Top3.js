@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import { DropResult } from 'react-beautiful-dnd';
 import DraggableList from './DraggableList';
-import pick from '@cahil/utils/accessors/pick';
 import { getItems, reorder } from './helpers';
+import { getAllItems, reorderItems } from '../store/top3Slice';
 
 const useStyles = makeStyles({
   flexPaper: {
@@ -18,19 +18,21 @@ const useStyles = makeStyles({
   }
 });
 
-const App = () => {
+const Top3 = () => {
   const classes = useStyles();
-  const [items, setItems] = useState(getItems());
+  const dispatch = useDispatch();
 
-  console.log(items);
+  const { items } = useSelector(({ accounts }) => accounts.top3);
+
+  useEffect(() => {
+    dispatch(getAllItems());
+  }, [])
 
   const onDragEnd = ({ destination, source }) => {
     // dropped outside the list
     if (!destination) return;
 
-    const newItems = reorder(items, source.index, destination.index);
-
-    setItems(newItems);
+    dispatch(reorderItems({ startIndex: source.index, endIndex: destination.index }));
   };
 
   return (
@@ -42,4 +44,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Top3;

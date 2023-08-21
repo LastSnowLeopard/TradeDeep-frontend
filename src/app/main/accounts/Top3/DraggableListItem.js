@@ -1,10 +1,11 @@
 import React, { useState, Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import { Draggable } from 'react-beautiful-dnd';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
-import { Box, Grid, Typography } from '@material-ui/core';
-import { Link, Rating } from '@mui/material';
+import { Grid, Typography } from '@material-ui/core';
+import { Box, Link, Rating } from '@mui/material';
 import Top3EditModal from './EditModal';
 
 const useStyles = makeStyles({
@@ -17,9 +18,13 @@ const DraggableListItem = ({ item, index }) => {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState({});
+
+  const { role } = useSelector(({ auth }) => auth.user);
 
   const handleOpen = () => {
+    if(role !== 'admin')
+    return;
+  
     setOpen(true);
   };
 
@@ -29,19 +34,18 @@ const DraggableListItem = ({ item, index }) => {
 
   return (
     <Fragment>
-      <Draggable draggableId={item.id} index={index}>
+      <Draggable  draggableId={item.id} index={index}>
         {(provided, snapshot) => (
           <ListItem
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             className={snapshot.isDragging ? classes.draggingListItem : ''}
-            onClick={handleOpen}
           >
             <Box boxShadow={1} p={2} bgcolor="background.paper" className='w-full'>
               <Grid item xs={12} md={12} lg={12} display="flex" alignItems="center">
                 <Box display="flex" alignItems="center" justifyContent="space-between">
-                  <Box display="flex" alignItems="center">
+                  <Box display="flex" alignItems="center" onClick={handleOpen} sx={{cursor: 'pointer'}}>
                     <Box mr={2}>
                       <img src={item.image} alt={item.name} width={80} />
                     </Box>
@@ -54,7 +58,7 @@ const DraggableListItem = ({ item, index }) => {
                     </Box>
                   </Box>
                   <Box>
-                    <Link underline="none" href={item.url}>Visit Site</Link>
+                    <Link underline="none" href={item.url} target="_blank" role="button">Visit Site</Link>
                   </Box>
                 </Box>
               </Grid>
