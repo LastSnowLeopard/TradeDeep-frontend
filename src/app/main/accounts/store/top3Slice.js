@@ -35,9 +35,7 @@ const top3Slice = createSlice({
       const { startIndex, endIndex } = action.payload
       const result = Array.from(state.items);
       const [removed] = result.splice(startIndex, 1);
-      console.log(startIndex, endIndex);
       result.splice(endIndex, 0, removed);
-
       state.items = result;
     }
   },

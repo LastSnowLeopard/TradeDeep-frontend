@@ -55,9 +55,9 @@ function FuseNavVerticalGroup(props) {
 
         {item.children && (
           <>
-            {item.children.map((_item) => (
+            {item.children.map((_item, index) => (
               <FuseNavItem
-                key={_item.id}
+                key={index}
                 type={`vertical-${_item.type}`}
                 item={_item}
                 nestedLevel={nestedLevel}
