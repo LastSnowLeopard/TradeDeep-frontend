@@ -34,7 +34,7 @@ const DraggableListItem = ({ item, index }) => {
 
   return (
     <Fragment>
-      <Draggable  draggableId={item.id} index={index}>
+      <Draggable isDragDisabled={role !== 'admin'} draggableId={item.id} index={index}>
         {(provided, snapshot) => (
           <ListItem
             ref={provided.innerRef}
