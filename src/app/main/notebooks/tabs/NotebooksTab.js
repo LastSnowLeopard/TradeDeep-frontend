@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
   borderbox: {
     boxShadow: "2px 2px 10px grey",
+    borderRadius: "14px"
   },
   image: {
     width: 150,
@@ -84,7 +85,7 @@ function ListItem(props) {
         </Box>
         <Box style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button variant="contained" color="primary" style={{ margin: 10 }} className={classes.circleButton}>
-            <Typography variant="body1"> + Luanch Notebook</Typography>
+            <Typography variant="body1"> + Launch Notebook</Typography>
           </Button>
         </Box>
       </Box>

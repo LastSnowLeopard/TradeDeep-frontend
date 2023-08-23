@@ -148,7 +148,8 @@ function Notebooks(props) {
                     color="success"
                     variant="contained"
                     className={classes.circleButton}
-                  // onClick={(ev) => dispatch(openNewModelDialog())}
+                    component={Link}
+                    to="/notebooks/addnotebook"
                   >
                     <Typography variant="body1">+Add notebook</Typography>
                   </Button>
@@ -157,8 +158,8 @@ function Notebooks(props) {
                     color="success"
                     variant="contained"
                     className={classes.circleButton}
-                    component={Link}
                     style={{textDecoration: 'none'}}
+                    component={Link}
                     to="/login"
                   >
                     <Typography variant="body1" style={{color: 'white'}}>+Add notebook</Typography>

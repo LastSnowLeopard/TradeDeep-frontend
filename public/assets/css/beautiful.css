@@ -141,7 +141,7 @@ cursor: pointer;
   font-size: 24px;
   color: white;
   padding: 5px 10px;
-  background: #555555;
+  background: #ddd;
   border-radius: 4px;
   border-right: 1px solid var(--border-color);
   z-index: 5;
@@ -177,7 +177,7 @@ cursor: pointer;
   font-size: 24px;
   color: white;
   padding: 5px 10px;
-  background: #555555;
+  background: #ddd;
   border-radius: 4px;
   border-right: 1px solid var(--border-color);
   z-index: 10;
@@ -192,7 +192,7 @@ cursor: pointer;
   font-size: 24px;
   color: white;
   padding: 5px 10px;
-  background: #555555;
+  background: #ddd;
   border-radius: 4px;
   border-right: 1px solid var(--border-color);
   z-index: 5;
@@ -483,6 +483,10 @@ cursor: pointer;
   width: 100%!important;
 } */
 
+.features {
+  width: 50px!important;
+}
+
 .input {
   background-color: black!important;
   left: -8px!important;
@@ -510,6 +514,6 @@ cursor: pointer;
 .fa-cog {
   float: right!important;
   font-size: 20px!important;
-  margin-top: 15px!important;
+  /* margin-top: 15px!important; */
   margin-right: 10px!important;
 }

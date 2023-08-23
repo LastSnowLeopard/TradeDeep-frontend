@@ -40,7 +40,7 @@ export default function MyNotebooksTab() {
               ) : (
                 <Box className={classes.fullBox}>
                   <Typography variant='h6'>Add your first Notebook</Typography>
-                  <Button>
+                  <Button component={Link} to='/notebooks/addnotebook'>
                     <Typography variant='h3' color='secondary'>+</Typography>
                   </Button>
                 </Box>

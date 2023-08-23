@@ -30,7 +30,7 @@ const DrawflowWrapper = () => {
               "name": "welcome",
               "data": {},
               "class": "welcome",
-              "html": "\n    <div>\n      <div class=\"title-box\" style=\"line-height: 25px;\"><p>👏 <b>Welcome!!</b></p>\n        <p><b>ChatGPT Engine!!</b>🤖</p></div>\n      <div class=\"box\">\n        <p><b>Tradeep.ai</b> is model training platform.</p>\n        <p>Build Agents, Train them on financial asset.</p>\n\n        <p>Enrich their features<br>\n           Work with Chatgpt<br>\n           to empower your trading.<br>\n           <br>\n        <p><b><u>Shortkeys:</u></b></p>\n        <p>🎹 <b>Delete</b> for remove selected<br>\n        💠 Mouse Left Click == Move<br>\n        ❌ Mouse Right == Delete Option<br>\n        🔍 Ctrl + Wheel == Zoom<br>\n        📱 Mobile support<br>\n        ...</p>\n <div id='chart-container'></div>      </div>\n     <div class=\"p-10\"><textarea rows=\"1\" class=\"w-full p-10 m-auto welcome-textarea\" placeholder=\"To ChatGPT...\"></textarea><button class=\"py-5 px-10 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700\">BsSendFill</button><button style=\"float: right;\" class=\"py-5 px-10 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700\">BiCopy</button></div>    </div>\n    ",
+              "html": "\n    <div>\n      <div class=\"title-box flex items-center\" style=\"line-height: 25px;\"><p><b>Tradeep.ai Builder🚀</b></p></div><div class=\"box\">\n        <p>Boost your trading with our simple, low-code platform.</p>\n        <p>Harness AI-powered agents, smart strategies, and HFT platform, all in one easy-to-use app.</p>\n\n<br>\n        <p><b><u>Shortkeys:</u></b></p>\n        <p>🎹 <b>Delete</b> for remove selected<br>\n        💠 Mouse Left Click == Move<br>\n        ❌ Mouse Right == Delete Option<br>\n        🔍 Ctrl + Wheel == Zoom<br>\n        📱 Mobile support<br>\n        ...</p>\n <div id='chart-container'></div>      </div>\n    </div>\n    ",
               "typenode": false,
               "inputs": {},
               "outputs": {},
@@ -145,7 +145,14 @@ const DrawflowWrapper = () => {
       case 'environment':
         var environment = `
         <div>
-          <div class="title-box"><i class="fa-solid fa-seedling"></i> Env(SelectAsset)<i class="fa fa-cog" onclick="onCogClick('Env')"></i></div>
+          <div class="title-box flex justify-between items-center">
+            <i class="fa-solid fa-seedling"></i>
+            <span>Env(SelectAsset)</span>
+            <div class="flex gap-3 items-center">
+              <i class="fa fa-code cursor-pointer"></i>
+              <i class="fa fa-cog cursor-pointer" onClick="function test() { alert('hello'); }"></i>
+            </div>
+          </div>
           <div class="box">
             <select>
               <option value="crypto">Crypto</option>
@@ -171,12 +178,19 @@ const DrawflowWrapper = () => {
           </div>
         </div>
       `;
-        editor.addNode('environment', 1, 1, pos_x, pos_y, 'environment', {}, environment);
+        editor.addNode('environment', 1, 1, pos_x, pos_y, 'environment', {}, environment.innerHTML);
         break;
       case 'state':
         var state = `
           <div>
-            <div class="title-box"><i class="fas fa-business-time"></i> State<i class="fa fa-cog"></i></div>
+            <div class="title-box flex justify-between items-center">
+              <i class="fas fa-business-time"></i>
+              <span>State</span>
+              <div class="flex gap-3 items-center">
+                <i class="fa fa-code cursor-pointer"></i>
+                <i class="fa fa-cog cursor-pointer"></i>
+              </div>
+            </div>
             <div class="box">
               <select>
                 <option value="forexbrocker_a">ForexBroker A</option>
@@ -202,7 +216,14 @@ const DrawflowWrapper = () => {
       case 'reward':
         var reward = `
           <div>
-            <div class="title-box"><i class="fas fa-medal"></i> Reward<i class="fa fa-cog"></i></div>
+            <div class="title-box flex justify-between items-center">
+              <i class="fas fa-medal"></i>
+              <span>Reward</span>
+              <div class="flex gap-3 items-center">
+                <i class="fa fa-code cursor-pointer"></i>
+                <i class="fa fa-cog cursor-pointer"></i>
+              </div>
+            </div>
             <div class="box">
               <select>
                 <option value="sharp_reward_a">Sharp Reward A</option>
@@ -217,7 +238,14 @@ const DrawflowWrapper = () => {
       case 'broker_account':
         var broker_account = `
         <div>
-          <div class="title-box"><i class="fa-regular fa-user"></i> Broker Account<i class="fa fa-cog"></i></div>
+          <div class="title-box flex justify-between items-center">
+            <i class="fa-regular fa-user"></i>
+            <span>Broker Account</span>
+            <div class="flex gap-3 items-center">
+              <i class="fa fa-code cursor-pointer"></i>
+              <i class="fa fa-cog cursor-pointer"></i>
+            </div>
+          </div>
           <div class="box">
             <select>
               <option value="metatrader4">Metatrader4</option>
@@ -234,7 +262,14 @@ const DrawflowWrapper = () => {
       case 'models':
         var models = `
           <div>
-            <div class="title-box"><i class="fa fa-tasks"></i> 3rd Party Data<i class="fa fa-cog"></i></div>
+            <div class="title-box flex justify-between items-center">
+              <i class="fa fa-tasks"></i>
+              <span>3rd Party Data</span>
+              <div class="flex gap-3 items-center">
+                <i class="fa fa-code cursor-pointer"></i>
+                <i class="fa fa-cog cursor-pointer"></i>
+              </div>
+            </div>
             <div class="box">
               <select>
                 <option value="rl">RL</option>
@@ -249,7 +284,14 @@ const DrawflowWrapper = () => {
       case 'agents':
         var agents = `
           <div>
-            <div class="title-box"><i class="fa fa-building"></i> Agents<i class="fa fa-cog"></i></div>
+            <div class="title-box flex justify-between items-center">
+              <i class="fa fa-building"></i>
+              <span>Agents</span>
+              <div class="flex gap-3 items-center">
+                <i class="fa fa-code cursor-pointer"></i>
+                <i class="fa fa-cog cursor-pointer"></i>
+              </div>
+            </div>
             <div class="box">
               <select>
                 <option value="ppo">PPO</option>
@@ -267,7 +309,14 @@ const DrawflowWrapper = () => {
       case 'event_logger':
         var event_logger = `
         <div>
-          <div class="title-box"><i class="fas fa-file-alt"></i> Event Logger <i class="fa fa-cog"></i></div>
+            <div class="title-box flex justify-between items-center">
+            <i class="fas fa-file-alt"></i>
+            <span>Event Logger</span>
+            <div class="flex gap-3 items-center">
+              <i class="fa fa-code cursor-pointer"></i>
+              <i class="fa fa-cog cursor-pointer"></i>
+            </div>
+          </div>
         </div>
         `;
         editor.addNode('event_logger', 1, 1, pos_x, pos_y, 'event_logger', {}, event_logger);
@@ -275,7 +324,14 @@ const DrawflowWrapper = () => {
       case 'action_space':
         var action_space = `
           <div>
-            <div class="title-box"><i class="fab fa-buysellads"></i> ActionSpace<i class="fa fa-cog"></i></div>
+            <div class="title-box flex justify-between items-center">
+              <i class="fab fa-buysellads"></i>
+              <span>ActionSpace</span>
+              <div class="flex gap-3 items-center">
+                <i class="fa fa-code cursor-pointer"></i>
+                <i class="fa fa-cog cursor-pointer"></i>
+              </div>
+            </div>
             <div class="box">
               <select>
                 <option value="buy_sell_move2break">Buy,Sell-Move2Break</option>
@@ -289,12 +345,16 @@ const DrawflowWrapper = () => {
       case 'features':
         var features = `
           <div>
-            <div class="title-box">
-              <i class="fas fa-rocket"></i> Features
-              <i class="fa fa-cog"></i>
+            <div class="title-box flex justify-between items-center" style="font-size: 12px">
+              <i class="fas fa-rocket"></i>
+              <span style="font-size: 12px">Feature</span>
+              <div class="flex gap-3 items-center">
+                <i class="fa fa-code cursor-pointer"></i>
+                <i class="fa fa-cog cursor-pointer"></i>
+              </div>
             </div>
             <div class="box">
-              <select>
+              <select style="width: 100%">
                 <option value="ma9">MA9</option>
                 <option value="ma21">MA21</option>
                 <option value="vwap">VWAP</option>
@@ -311,9 +371,13 @@ const DrawflowWrapper = () => {
       case 'social_channels':
         var social_channels = `
           <div>
-            <div class="title-box" style="font-size: 15px">
-              <i class="fa-brands fa-telegram"></i> Social Channels
-              <i class="fa fa-cog"></i>
+            <div class="title-box flex justify-between items-center" style="font-size: 15px">
+              <i class="fa-brands fa-telegram"></i>
+              <span>Social Channels</span>
+              <div class="flex gap-3 items-center">
+                <i class="fa fa-code cursor-pointer" onClick={test}></i>
+                <i class="fa fa-cog cursor-pointer"></i>
+              </div>
             </div>
             <div class="box">
               <select>
@@ -330,9 +394,13 @@ const DrawflowWrapper = () => {
       default:
         var other = `
         <div>
-          <div class="title-box">
-            <i class="fa-solid fa-code"></i> ${name}
-            <i class="fa fa-cog"></i>
+          <div class="title-box flex justify-between items-center">
+            <i class="fa-solid fa-code cursor-pointer"></i>
+            <span>${name}</span>
+            <div class="flex gap-3 items-center">
+              <i class="fa fa-code cursor-pointer"></i>
+              <i class="fa fa-cog cursor-pointer"></i>
+            </div>
           </div>
           <div class="env-setting w-full pr-10 pl-10 pb-10">
             <button onclick="statePrompt()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-10 mt-10 rounded">Setup</button>
@@ -342,6 +410,10 @@ const DrawflowWrapper = () => {
         editor.addNode(name, 1, 1, pos_x, pos_y, name, {}, other);
         break;
     }
+  }
+
+  function test(e) {
+    alert("hello")
   }
 
   function undo() {

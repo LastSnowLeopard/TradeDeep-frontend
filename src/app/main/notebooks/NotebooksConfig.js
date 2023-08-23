@@ -11,6 +11,10 @@ const NotebooksConfig = {
       path: '/notebooks',
       component: lazy(() => import('./Notebooks')),
     },
+    {
+      path: '/addnotebook',
+      component: lazy(() => import('./addNotebook/')),
+    },
   ],
 };
 
