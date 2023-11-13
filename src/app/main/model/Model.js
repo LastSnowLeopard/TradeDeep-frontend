@@ -10,6 +10,7 @@ import withReducer from 'app/store/withReducer';
 import BackTest from './tabs/BackTest';
 import CreateModel from './tabs/CreateModel';
 import TrainingResult from './tabs/TrainingResult';
+import CodeEditor from './tabs/codeEditor';
 import { openNewModelDialog } from './store/modelSlice';
 import ModelDialog from './ModelDialog';
 import reducer from './store';
@@ -32,6 +33,10 @@ function Model(props) {
     setTabValue(value);
   }
 
+  const handleLastTabClick = (event) => {
+    setTabValue(5);
+  };
+
   return (
     <Box>
       <Box className="flex justify-between">
@@ -49,8 +54,6 @@ function Model(props) {
           }}
           style={{ paddingTop: '1.2rem' }}
         >
-
-
           <Tab
             className="text-14 font-semibold min-h-40 min-w-64 mx-4 modelNavbarBtn"
             disableRipple
@@ -77,13 +80,19 @@ function Model(props) {
             disableRipple
             label="Template"
           />
+          <Tab
+            className="text-14 font-semibold min-h-40 min-w-64 mx-4 modelNavbarBtn"
+            disableRipple
+            label="</>"
+          />
         </Tabs>
       </Box>
       <Box className={classes.content}>
         <div className="p-12 pl-0 lg:ltr:pr-0 lg:rtl:pl-0">
           {tabValue === 0 && <CreateModel />}
-          {tabValue === 2 && <TrainingResult />}
           {tabValue === 1 && <BackTest />}
+          {tabValue === 2 && <TrainingResult />}
+          {/* {tabValue === 5 && <CodeEditor />} */}
         </div>
       </Box>
       {/* <ModelDialog /> */}

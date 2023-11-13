@@ -10,7 +10,7 @@ html, body {
   padding: 0px;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  overflow: auto;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -133,10 +133,6 @@ cursor: pointer;
 }
 
 .btn-lock {
-  float: right;
-  position: absolute;
-  bottom: 70px;
-  right: 410px;
   display: flex;
   font-size: 24px;
   color: white;
@@ -152,7 +148,7 @@ cursor: pointer;
   margin-left: 20px;
   float: left;
   position: absolute;
-  bottom: 120px;
+  bottom: 70px;
   display: flex;
   font-size: 24px;
   color: white;
@@ -168,11 +164,16 @@ cursor: pointer;
   cursor: pointer;
 }
 
-.bar-controls {
-  margin-left: 20px;
-  float: left;
+.toolbar {
   position: absolute;
-  bottom: 70px;
+  bottom: 0px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0px 20px;
+}
+
+.bar-controls {
   display: flex;
   font-size: 24px;
   color: white;
@@ -185,9 +186,6 @@ cursor: pointer;
 
 .bar-zoom {
   float: right;
-  position: absolute;
-  bottom: 70px;
-  right: 235px;
   display: flex;
   font-size: 24px;
   color: white;
@@ -223,7 +221,8 @@ cursor: pointer;
 
 #drawflow {
   position: relative;
-  width: calc(100vw - 301px);
+  /* width: calc(100vw - 510px); */
+  width: 100%;
   height: calc(100% - 50px);
   top: 40px;
   background: var(--background-color);
@@ -246,7 +245,7 @@ cursor: pointer;
   .btn-clear {
     right: 85px;
   }
-  .btn-lock, .bar-zoom {
+  /* .btn-lock, .bar-zoom {
     bottom: 70px;
   }
   .btn-lock {
@@ -254,7 +253,7 @@ cursor: pointer;
   }
   .bar-zoom {
     right: 20px;
-  }
+  } */
 }
 
 @media only screen and (max-width: 1280px) {
@@ -273,7 +272,7 @@ cursor: pointer;
   .btn-export {
     right: 10px;
   }
-  .btn-lock, .bar-zoom {
+  /* .btn-lock, .bar-zoom {
     bottom: 70px;
   }
   .btn-lock {
@@ -281,7 +280,7 @@ cursor: pointer;
   }
   .bar-zoom {
     right: 20px;
-  }
+  } */
 }
 
 
@@ -296,7 +295,7 @@ cursor: pointer;
   -webkit-box-shadow: 0 2px 15px 2px var(--border-color);
   box-shadow: 0 2px 15px 2px var(--border-color);
   padding: 0px;
-  width: 210px;
+  width: 220px;
   font-size: 17px;
 }
 
